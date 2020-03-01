@@ -33,3 +33,4 @@ class TaskAPIView(generics.ListCreateAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
     lookup_field = "id"
+

@@ -3,6 +3,8 @@ from .models import TaskList, Task
 
 
 class TaskListSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    name = serializers.CharField(required=True)
 
     class Meta:
         model = TaskList
@@ -10,8 +12,10 @@ class TaskListSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    task_list = TaskListSerializer(read_only=True)
+    id = serializers.IntegerField(read_only=True, required=False)
+    task_list = serializers.PrimaryKeyRelatedField(required=True, queryset=TaskList.objects.all())
 
     class Meta:
         model = Task
-        fields = ('id', 'name', 'task list')
+        fields = ('id', 'name', 'task_list')
+

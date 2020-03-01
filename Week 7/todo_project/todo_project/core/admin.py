@@ -4,11 +4,12 @@ from todo_project.core.models import TaskList, Task
 
 
 @admin.register(TaskList)
-class BookAdmin(admin.ModelAdmin):
+class TaskListAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'importance')
+    search_fields = ('name',)
     ordering = ('importance',)
 
 
 @admin.register(Task)
-class AuthorAdmin(admin.ModelAdmin):
-    list_display = ('id', 'created_at')
+class TaskAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'task_list')
