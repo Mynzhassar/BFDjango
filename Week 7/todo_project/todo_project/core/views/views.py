@@ -3,7 +3,7 @@ from rest_framework import generics, mixins
 from rest_framework.response import Response
 
 from todo_project.core.models import TaskList, Task
-from todo_project.core.serializers import TaskListSerializer, TaskSerializer
+from todo_project.core.serializers import TaskListSerializer, TaskShortSerializer
 
 
 class TaskListAPIView(generics.ListCreateAPIView):
@@ -31,6 +31,6 @@ class TaskListDetailAPIView(mixins.RetrieveModelMixin,
 
 class TaskAPIView(generics.ListCreateAPIView):
     queryset = Task.objects.all()
-    serializer_class = TaskSerializer
+    serializer_class = TaskShortSerializer
     lookup_field = "id"
 

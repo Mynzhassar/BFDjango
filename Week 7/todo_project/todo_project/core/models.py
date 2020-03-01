@@ -53,3 +53,34 @@ class Task(models.Model):
 
     def __str__(self):
         return "{0} in {1}".format(self.name, self.task_list)
+
+
+class TaskType(models.Model):
+    task = models.OneToOneField(Task, on_delete=models.CASCADE)
+    description = models.TextField(max_length=300, default="")
+    is_finished = models.BooleanField(default=False)
+
+    class Meta:
+        abstract = True
+
+
+class StudyGoals(TaskType):
+    discipline = models.CharField(max_length=150, default="ACM")
+
+    class Meta:
+        verbose_name = "Goals at university"
+        verbose_name_plural = "Goals at university"
+
+    def __str__(self):
+        return f'{self.discipline} at the University'
+
+
+class SportsGoal(TaskType):
+    sport = models.CharField(max_length=150, default="CrossFit")
+
+    class Meta:
+        verbose_name = "Goals at sports"
+        verbose_name_plural = "Goals at sports"
+
+    def __str__(self):
+        return f'{self.discipline} goal'

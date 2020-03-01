@@ -11,11 +11,18 @@ class TaskListSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 
-class TaskSerializer(serializers.ModelSerializer):
+class TaskShortSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True, required=False)
     task_list = serializers.PrimaryKeyRelatedField(required=True, queryset=TaskList.objects.all())
 
     class Meta:
         model = Task
         fields = ('id', 'name', 'task_list')
+
+
+class TaskFullSerializer(serializers.ModelSerializer):
+    task_list_full = TaskListSerializer(read_only=True)
+
+    class Meta(TaskShortSerializer.Meta):
+        fields = TaskShortSerializer.Meta.fields + ('task_list_full',)
 

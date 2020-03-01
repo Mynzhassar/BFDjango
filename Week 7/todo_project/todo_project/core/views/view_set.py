@@ -1,5 +1,5 @@
 from todo_project.core.models import TaskList, Task
-from todo_project.core.serializers import TaskListSerializer, TaskSerializer
+from todo_project.core.serializers import TaskListSerializer
 
 from django.shortcuts import get_object_or_404
 
