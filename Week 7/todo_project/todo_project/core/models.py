@@ -1,24 +1,19 @@
 from django.db import models
-from rest_framework import serializers
 
-from todo_project.utils.constants import (TASK_DONE,
-                                          TASK_IN_PROGRESS,
+from todo_project.utils.constants import (TASK_STATUSES,
                                           TASK_NEW,
                                           TASK_TODO,
-                                          TASK_STATUSES)
+                                          TASK_IN_PROGRESS,
+                                          TASK_DONE)
 
 
-def valid_importance(value):
-    if not (1 <= value <= 10):
-        raise serializers.ValidationError("Invalid importance")
-
+# Base models of the project
 
 class TaskList(models.Model):
     name = models.CharField(max_length=150)
     description = models.TextField(default="")
     created_at = models.DateTimeField(auto_now=True)
-    importance = models.IntegerField(default=1,
-                                     validators=[valid_importance])
+    importance = models.IntegerField(default=1)
 
     class Meta:
         verbose_name = "Task List"
@@ -56,6 +51,7 @@ class Task(models.Model):
 
 
 class TaskType(models.Model):
+    name = models.CharField(max_length=100)
     task = models.OneToOneField(Task, on_delete=models.CASCADE)
     description = models.TextField(max_length=300, default="")
     is_finished = models.BooleanField(default=False)
@@ -84,3 +80,37 @@ class SportsGoal(TaskType):
 
     def __str__(self):
         return f'{self.discipline} goal'
+
+
+# Models of managers
+
+class TaskNewManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(status=TASK_NEW)
+
+    def filter_by_status(self, status):
+        return self.filter(status=status)
+
+
+class TaskToDoManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(status=TASK_TODO)
+
+    def filter_by_status(self, status):
+        return self.filter(status=status)
+
+
+class TaskProgressManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(status=TASK_IN_PROGRESS)
+
+    def filter_by_status(self, status):
+        return self.filter(status=status)
+
+
+class TaskDoneManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(status=TASK_DONE)
+
+    def filter_by_status(self, status):
+        return self.filter(status=status)

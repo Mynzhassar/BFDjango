@@ -1,5 +1,6 @@
-from todo_project.core.models import TaskList, Task
-from todo_project.core.serializers import TaskListSerializer, TaskShortSerializer, TaskFullSerializer
+from todo_project.core.models import TaskList, Task, TaskType
+from todo_project.core.serializers import TaskListSerializer, \
+    TaskSerializer, TaskDetailedSerializer, TaskTypeSerializer
 
 from django.shortcuts import get_object_or_404
 
@@ -36,8 +37,17 @@ class TaskViewSet(mixins.ListModelMixin,
 
     def get_serializer_class(self):
         if self.action == 'list':
-            return TaskShortSerializer
+            return TaskSerializer
         if self.action == 'retrieve':
-            return TaskFullSerializer
+            return TaskDetailedSerializer
 
-        return TaskShortSerializer
+        return TaskSerializer
+
+
+class TaskTypeViewSet(mixins.ListModelMixin,
+                      mixins.CreateModelMixin,
+                      viewsets.GenericViewSet):
+    serializer_class = TaskTypeSerializer
+
+    def get_queryset(self):
+        return Task.objects.filter(task=self.request.task)
