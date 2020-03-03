@@ -1,6 +1,5 @@
-from django.shortcuts import render
 from rest_framework import generics, mixins
-from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from todo_project.core.models import TaskList, Task
 from todo_project.core.serializers import TaskListSerializer, TaskShortSerializer
@@ -18,6 +17,7 @@ class TaskListDetailAPIView(mixins.RetrieveModelMixin,
     queryset = TaskList.objects.all()
     serializer_class = TaskListSerializer
     lookup_field = "id"
+    permission_classes = (IsAuthenticated, )
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)

@@ -1,4 +1,4 @@
-"""todo_project URL Configuration
+"""midterm URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
@@ -18,6 +18,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('core/', include('todo_project.core.urls')),
-    path('auth/', include('todo_project._auth.urls')),
+    path('core/', include('midterm.core.urls')),
+    path('auth/', include('midterm._auth.urls')),
 ]
