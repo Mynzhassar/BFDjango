@@ -45,7 +45,17 @@ class TaskDetailedSerializer(serializers.ModelSerializer):
         fields = TaskSerializer.Meta.fields + ('task_list_full',)
 
 
-class TaskTypeSerializer(serializers.ModelSerializer):
+class StudyGoalsSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    name = serializers.CharField(required=True, validators=[name_validator])
+    task = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = TaskType
+        field = ('id', 'name', 'task')
+
+
+class SportsGoalsSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(required=True, validators=[name_validator])
     task = serializers.IntegerField(read_only=True)

@@ -1,6 +1,6 @@
 from todo_project.core.models import TaskList, Task, TaskType
 from todo_project.core.serializers import TaskListSerializer, \
-    TaskSerializer, TaskDetailedSerializer, TaskTypeSerializer
+    TaskSerializer, TaskDetailedSerializer, SportsGoalsSerializer, StudyGoalsSerializer
 
 from django.shortcuts import get_object_or_404
 
@@ -8,6 +8,15 @@ from rest_framework import viewsets
 from rest_framework import mixins
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.permissions import BasePermission, SAFE_METHODS, IsAuthenticated
+
+
+class IsAdminOrReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        if request in SAFE_METHODS:
+            return True
+
+        return request.user and request.user.is_superuser
 
 
 class TaskListsViewSet(mixins.ListModelMixin,
@@ -15,6 +24,7 @@ class TaskListsViewSet(mixins.ListModelMixin,
                        viewsets.GenericViewSet):
     queryset = TaskList.objects.all()
     serializer_class = TaskListSerializer
+    permission_classes = (IsAdminOrReadOnly,)
 
     @action(methods=['GET'], detail=False)
     def top_five(self):
@@ -32,8 +42,10 @@ class TaskListsViewSet(mixins.ListModelMixin,
 
 class TaskViewSet(mixins.ListModelMixin,
                   mixins.RetrieveModelMixin,
+                  mixins.CreateModelMixin,
                   viewsets.GenericViewSet):
     queryset = Task.objects.all()
+    # permission_classes = (IsAdminOrReadOnly,)
 
     def get_serializer_class(self):
         if self.action == 'list':
@@ -44,10 +56,19 @@ class TaskViewSet(mixins.ListModelMixin,
         return TaskSerializer
 
 
-class TaskTypeViewSet(mixins.ListModelMixin,
-                      mixins.CreateModelMixin,
-                      viewsets.GenericViewSet):
-    serializer_class = TaskTypeSerializer
+class SportsGoalViewSet(mixins.ListModelMixin,
+                        mixins.CreateModelMixin,
+                        viewsets.GenericViewSet):
+    serializer_class = SportsGoalsSerializer
+
+    def get_queryset(self):
+        return Task.objects.filter(task=self.request.task)
+
+
+class StudyGoalViewSet(mixins.ListModelMixin,
+                       mixins.CreateModelMixin,
+                       viewsets.GenericViewSet):
+    serializer_class = StudyGoalsSerializer
 
     def get_queryset(self):
         return Task.objects.filter(task=self.request.task)

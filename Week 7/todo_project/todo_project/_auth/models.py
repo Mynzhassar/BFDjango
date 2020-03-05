@@ -66,3 +66,12 @@ class MyAbstractUser(AbstractBaseUser, PermissionsMixin):
 
 class MyUser(MyAbstractUser):
     pass
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
+    bio = models.TextField(max_length=500)
+    address = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.user.name

@@ -61,25 +61,25 @@ class TaskType(models.Model):
 
 
 class StudyGoals(TaskType):
-    discipline = models.CharField(max_length=150, default="ACM")
+    pass
 
     class Meta:
         verbose_name = "Goals at university"
         verbose_name_plural = "Goals at university"
 
     def __str__(self):
-        return f'{self.discipline} at the University'
+        return f'{self.name} at the University'
 
 
 class SportsGoal(TaskType):
-    sport = models.CharField(max_length=150, default="CrossFit")
+    pass
 
     class Meta:
         verbose_name = "Goals at sports"
         verbose_name_plural = "Goals at sports"
 
     def __str__(self):
-        return f'{self.discipline} goal'
+        return f'{self.name} goal'
 
 
 # Models of managers
