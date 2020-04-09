@@ -1,0 +1,15 @@
+DEBUG -- 2020-04-09 14:25:13,272: Task list object created, ID: test task list
+INFO -- 2020-04-09 14:25:13,274: Task list object created, ID: test task list
+WARNING -- 2020-04-09 14:25:13,274: Task list object created, ID: test task list
+ERROR -- 2020-04-09 14:25:13,274: Task list object created, ID: test task list
+CRITICAL -- 2020-04-09 14:25:13,275: Task list object created, ID: test task list
+DEBUG -- 2020-04-09 14:50:48,439: Task list object created, ID: test task list
+INFO -- 2020-04-09 14:50:48,440: Task list object created, ID: test task list
+WARNING -- 2020-04-09 14:50:48,441: Task list object created, ID: test task list
+ERROR -- 2020-04-09 14:50:48,441: Task list object created, ID: test task list
+CRITICAL -- 2020-04-09 14:50:48,442: Task list object created, ID: test task list
+DEBUG -- 2020-04-09 14:51:17,628: Task list object created, ID: test task list
+INFO -- 2020-04-09 14:51:17,628: Task list object created, ID: test task list
+WARNING -- 2020-04-09 14:51:17,629: Task list object created, ID: test task list
+ERROR -- 2020-04-09 14:51:17,629: Task list object created, ID: test task list
+CRITICAL -- 2020-04-09 14:51:17,629: Task list object created, ID: test task list

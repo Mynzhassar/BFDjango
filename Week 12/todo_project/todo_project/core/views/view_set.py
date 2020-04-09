@@ -8,7 +8,11 @@ from rest_framework import viewsets
 from rest_framework import mixins
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
 from rest_framework.permissions import BasePermission, SAFE_METHODS
+
+import logging
+logger = logging.getLogger(__name__)
 
 
 class IsAdmin(BasePermission):
@@ -23,7 +27,20 @@ class TaskListsViewSet(mixins.ListModelMixin,
                        viewsets.GenericViewSet):
     queryset = TaskList.objects.all()
     serializer_class = TaskListSerializer
-    permission_classes = (IsAdmin,)
+    # permission_classes = (IsAdmin,)
+    parser_classes = (FormParser, MultiPartParser, JSONParser)
+
+    def perform_create(self, serializer):
+        serializer.save()
+        logger.debug(f'Task list object created, ID: {serializer.instance}')
+        logger.info(f'Task list object created, ID: {serializer.instance}')
+        logger.warning(f'Task list object created, ID: {serializer.instance}')
+        logger.error(f'Task list object created, ID: {serializer.instance}')
+        logger.critical(f'Task list object created, ID: {serializer.instance}')
+
+    def get_queryset(self):
+        queryset = self.queryset.filter(creator=self.request.user)
+        return queryset
 
     @action(methods=['GET'], detail=False)
     def top_five(self):
@@ -44,7 +61,7 @@ class TaskViewSet(mixins.ListModelMixin,
                   mixins.CreateModelMixin,
                   viewsets.GenericViewSet):
     queryset = Task.objects.all()
-    permission_classes = (IsAdmin,)
+    # permission_classes = (IsAdmin,)
 
     def get_serializer_class(self):
         if self.action == 'list':
