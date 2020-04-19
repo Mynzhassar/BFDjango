@@ -27,17 +27,17 @@ class TaskList(models.Model):
     def __str__(self):
         return "{} task list".format(self.name)
 
-    @property
-    def started(self):
-        return f'Task list has been set at {self.created_at}'
+    # @property
+    # def started(self):
+    #     return f'Task list has been set at {self.created_at}'
 
-    @classmethod
-    def top_important(cls):
-        return TaskList.objects.all().order_by("-importance")[:10]
+    # @classmethod
+    # def top_important(cls):
+    #     return TaskList.objects.all().order_by("-importance")[:10]
 
-    @staticmethod
-    def compare(task_list1, task_list2):
-        return task_list1.importance > task_list2.importance
+    # @staticmethod
+    # def compare(task_list1, task_list2):
+    #     return task_list1.importance > task_list2.importance
 
 
 class Task(models.Model):

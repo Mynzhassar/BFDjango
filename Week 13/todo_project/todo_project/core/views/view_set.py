@@ -2,24 +2,20 @@ from todo_project.core.models import TaskList, Task
 from todo_project.core.serializers import TaskListSerializer, \
     TaskSerializer, TaskDetailedSerializer, SportsGoalsSerializer, StudyGoalsSerializer
 
-from django.shortcuts import get_object_or_404
-
 from rest_framework import viewsets
 from rest_framework import mixins
-from rest_framework.response import Response
-from rest_framework.decorators import action
 from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
-from rest_framework.permissions import BasePermission, SAFE_METHODS, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 
 import logging
 logger = logging.getLogger(__name__)
 
 
-class IsAdmin(BasePermission):
-    def has_permission(self, request, view):
-        if request.method in SAFE_METHODS:
-            return True
-        return request.user and request.user.is_superuser
+# class IsAdmin(BasePermission):
+#     def has_permission(self, request, view):
+#         if request.method in SAFE_METHODS:
+#             return True
+#         return request.user and request.user.is_superuser
 
 
 class TaskListsViewSet(mixins.ListModelMixin,
@@ -38,18 +34,18 @@ class TaskListsViewSet(mixins.ListModelMixin,
         logger.error(f'Task list object created, ID: {serializer.instance}')
         logger.critical(f'Task list object created, ID: {serializer.instance}')
 
-    @action(methods=['GET'], detail=False)
-    def top_five(self):
-        top_objects = TaskList.objects.all().order_by("-importance")[:5]
-        serializer = TaskListSerializer(top_objects)
-        return Response(serializer.data)
+    # @action(methods=['GET'], detail=False)
+    # def top_five(self):
+    #     top_objects = TaskList.objects.all().order_by("-importance")[:5]
+    #     serializer = TaskListSerializer(top_objects)
+    #     return Response(serializer.data)
 
-    @action(methods=['PUT'], detail=True)
-    def set_rating(self, request, pk):
-        task_list = get_object_or_404(TaskList, id=pk)
-        task_list.set_importance(request.data.get('importance'))
-        serializer = TaskListSerializer(task_list)
-        return Response(serializer.data)
+    # @action(methods=['PUT'], detail=True)
+    # def set_rating(self, request, pk):
+    #     task_list = get_object_or_404(TaskList, id=pk)
+    #     task_list.set_importance(request.data.get('importance'))
+    #     serializer = TaskListSerializer(task_list)
+    #     return Response(serializer.data)
 
 
 class TaskViewSet(mixins.ListModelMixin,

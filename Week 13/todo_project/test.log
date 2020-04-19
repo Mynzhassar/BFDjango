@@ -3,3 +3,8 @@ INFO -- 2020-04-10 15:37:49,332: Task list object created, ID: Friday task list
 WARNING -- 2020-04-10 15:37:49,334: Task list object created, ID: Friday task list
 ERROR -- 2020-04-10 15:37:49,335: Task list object created, ID: Friday task list
 CRITICAL -- 2020-04-10 15:37:49,336: Task list object created, ID: Friday task list
+DEBUG -- 2020-04-19 11:44:45,649: Task list object created, ID: Sex task list
+INFO -- 2020-04-19 11:44:45,661: Task list object created, ID: Sex task list
+WARNING -- 2020-04-19 11:44:45,661: Task list object created, ID: Sex task list
+ERROR -- 2020-04-19 11:44:45,662: Task list object created, ID: Sex task list
+CRITICAL -- 2020-04-19 11:44:45,662: Task list object created, ID: Sex task list
