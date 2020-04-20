@@ -31,36 +31,30 @@ class TaskListSerializer(serializers.ModelSerializer):
 
 
 class StudyGoalSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(required=True, validators=[name_validator])
     task_list_id = serializers.IntegerField(write_only=True)
-    user_id = serializers.IntegerField()
 
     class Meta:
         model = StudyGoal
-        fields = ('id', 'name', 'task_list_id', 'user_id')
+        fields = ('id', 'name', 'user')
 
 
 class SportsGoalSerializer(serializers.ModelSerializer):
-    # id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(required=True, validators=[name_validator])
     task_list_id = serializers.IntegerField(write_only=True)
-    #user = serializers.PrimaryKeyRelatedField(required=False, queryset=MyUser.objects.all())
 
     class Meta:
         model = SportGoal
-        fields = ('id', 'name', 'task_list_id', 'user')
+        fields = ('id', 'name', 'user', 'task_list_id')
 
 
 class SportsGoalDetailedSerializer(serializers.ModelSerializer):
-    task_list = TaskListSerializer(read_only=True)
 
-    class Meta(TaskListSerializer.Meta):
-        fields = TaskListSerializer.Meta.fields + ('task_list', 'creator')
+    class Meta(SportsGoalSerializer.Meta):
+        fields = SportsGoalSerializer.Meta.fields + ('task_list', )
 
 
 class StudyGoalDetailedSerializer(serializers.ModelSerializer):
-    task_list = TaskListSerializer(read_only=True)
 
-    class Meta(TaskListSerializer.Meta):
-        fields = TaskListSerializer.Meta.fields + ('task_list', 'creator')
+    class Meta(StudyGoalSerializer.Meta):
+        fields = StudyGoalSerializer.Meta.fields + ('task_list', )

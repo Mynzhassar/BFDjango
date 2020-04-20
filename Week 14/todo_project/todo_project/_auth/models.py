@@ -78,4 +78,4 @@ class Profile(models.Model):
     address = models.CharField(max_length=300)
 
     def __str__(self):
-        return f'{self.user.name} --- {self.user.bio} --- {self.user.address}'
+        return f'{self.user.username}'
